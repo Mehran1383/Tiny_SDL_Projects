@@ -1,0 +1,15 @@
+﻿  Game.cpp
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(126,28): warning C4244: '=': conversion from 'Uint64' to 'Uint32', possible loss of data
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(203,31): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(203,31): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(204,34): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(204,34): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(212,31): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(212,31): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(213,34): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(213,34): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(221,31): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(221,31): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(222,31): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+F:\Github\Tiny_SDL_Projects\Pong\Game.cpp(222,31): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Pong.vcxproj -> F:\Github\Tiny_SDL_Projects\Pong\Pong\x64\Debug\Pong.exe

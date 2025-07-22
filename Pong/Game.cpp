@@ -170,7 +170,7 @@ void Game::UpdateGame()
 			mIsRunning = false;
 		}
 
-		if (ball.position.y <= thickness)
+		if (ball.position.y <= thickness && ball.velocity.y < 0.0f)
 		{
 			ball.velocity.y *= -1;
 		}

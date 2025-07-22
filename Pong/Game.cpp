@@ -41,10 +41,17 @@ bool Game::Initialize()
 	mPaddle2Pos.x = width - 10.0f - thickness;
 	mPaddle2Pos.y = height / 2.0f;
 
-	mBallPos.x = width/2.0f;
-	mBallPos.y = height/2.0f;
-	mBallVel.x = -200.0f;
-	mBallVel.y = 235.0f;
+	Ball ball;
+	ball.position.x = width/2.0f;
+	ball.position.y = height/2.0f;
+	ball.velocity.x = -200.0f;
+	ball.velocity.y = 235.0f;
+	balls.push_back(ball);
+	ball.position.x = width / 2.0f;
+	ball.position.y = height / 2.0f;
+	ball.velocity.x = 200.0f;
+	ball.velocity.y = -235.0f;
+	balls.push_back(ball);
 	return true;
 }
 
@@ -141,44 +148,47 @@ void Game::UpdateGame()
 		}
 	}
 	
-	// Update ball position based on ball velocity
-	mBallPos.x += mBallVel.x * deltaTime;
-	mBallPos.y += mBallVel.y * deltaTime;
-	
-	// Bounce if needed
-	float diff1 = mPaddle1Pos.y - mBallPos.y;
-	float diff2 = mPaddle2Pos.y - mBallPos.y;
-	diff1 = (diff1 > 0.0f) ? diff1 : -diff1;
-	diff2 = (diff2 > 0.0f) ? diff2 : -diff2;
+	for (auto& ball : balls)
+	{
+		// Update ball position based on ball velocity
+		ball.position.x += ball.velocity.x * deltaTime;
+		ball.position.y += ball.velocity.y * deltaTime;
 
-	if ((diff1 <= paddleH / 2.0f && mBallPos.x <= 25.0f && mBallPos.x >= 20.0f && mBallVel.x < 0.0f) ||
-		(diff2 <= paddleH / 2.0f && mBallPos.x >= width - 25.0f && mBallPos.x <= width - 20.0f && mBallVel.x > 0.0f))
-	{
-		mBallVel.x *= -1.0f;
-	}	
-	else if (mBallPos.x <= 0.0f || mBallPos.x >= width) 
-	{
-		mIsRunning = false;
-	}
-	
-	if (mBallPos.y <= thickness)
-	{
-		mBallVel.y *= -1;
-	}
-	else if (mBallPos.y >= (height - thickness) && mBallVel.y > 0.0f)
-	{
-		mBallVel.y *= -1;
-	}
+		// Bounce if needed
+		float diff1 = mPaddle1Pos.y - ball.position.y;
+		float diff2 = mPaddle2Pos.y - ball.position.y;
+		diff1 = (diff1 > 0.0f) ? diff1 : -diff1;
+		diff2 = (diff2 > 0.0f) ? diff2 : -diff2;
 
-	if (mBallVel.x > 0)
-		mBallVel.x += ballAcc * deltaTime;
-	else
-		mBallVel.x -= ballAcc * deltaTime;
+		if ((diff1 <= paddleH / 2.0f && ball.position.x <= 25.0f && ball.position.x >= 20.0f && ball.velocity.x < 0.0f) ||
+			(diff2 <= paddleH / 2.0f && ball.position.x >= width - 25.0f && ball.position.x <= width - 20.0f && ball.velocity.x > 0.0f))
+		{
+			ball.velocity.x *= -1.0f;
+		}
+		else if (ball.position.x <= 0.0f || ball.position.x >= width)
+		{
+			mIsRunning = false;
+		}
 
-	if (mBallVel.y > 0)
-		mBallVel.y += ballAcc * deltaTime;
-	else
-		mBallVel.y -= ballAcc * deltaTime;
+		if (ball.position.y <= thickness)
+		{
+			ball.velocity.y *= -1;
+		}
+		else if (ball.position.y >= (height - thickness) && ball.velocity.y > 0.0f)
+		{
+			ball.velocity.y *= -1;
+		}
+
+		if (ball.velocity.x > 0)
+			ball.velocity.x += ballAcc * deltaTime;
+		else
+			ball.velocity.x -= ballAcc * deltaTime;
+
+		if (ball.velocity.y > 0)
+			ball.velocity.y += ballAcc * deltaTime;
+		else
+			ball.velocity.y -= ballAcc * deltaTime;
+	}
 }
 
 void Game::GenerateOutput()
@@ -216,14 +226,17 @@ void Game::GenerateOutput()
 	};
 	SDL_RenderFillRect(mRenderer, &paddle2);
 	
-	// Draw ball
-	SDL_FRect ball{	
-		static_cast<int>(mBallPos.x - thickness/2),
-		static_cast<int>(mBallPos.y - thickness/2),
-		thickness,
-		thickness
-	};
-	SDL_RenderFillRect(mRenderer, &ball);
+	for (auto& b : balls)
+	{
+		// Draw ball
+		SDL_FRect ball{
+			static_cast<int>(b.position.x - thickness / 2),
+			static_cast<int>(b.position.y - thickness / 2),
+			thickness,
+			thickness
+		};
+		SDL_RenderFillRect(mRenderer, &ball);
+	}
 	
 	// Swap front buffer and back buffer
 	SDL_RenderPresent(mRenderer);

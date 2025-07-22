@@ -1,9 +1,17 @@
 #include "SDL3/SDL.h"
 
+#include <vector>
+
 struct Vector2
 {
 	float x;
 	float y;
+};
+
+struct Ball
+{
+	Vector2 position;
+	Vector2 velocity;
 };
 
 class Game
@@ -29,6 +37,5 @@ private:
 	int mPaddle2Dir;
 	Vector2 mPaddle1Pos;
 	Vector2 mPaddle2Pos;
-	Vector2 mBallPos;
-	Vector2 mBallVel;
+	std::vector<Ball> balls;
 };

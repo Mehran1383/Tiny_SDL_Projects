@@ -19,8 +19,9 @@ This project is an implementation of the classic Pong game using C++ and the SDL
 
 ## Installation
 1. Clone the repository.
-2. Install **Microsoft Visual Studio** and then open **Pong.sln**. 
-3. To use SDL3 package, edit your project properties in Microsoft Visual Studio:
+2. Install **Microsoft Visual Studio** and then open **Pong.sln**.
+   
+If you want to use SDL3 package on your own solution, edit your project properties in Microsoft Visual Studio:
 - Add the include directory to "VC++ Directories" -> "Include Directories"
 - Add the lib/_arch_ directory to "VC++ Directories" -> "Library Directories"
 - Add SDL3.lib to Linker -> Input -> "Additional Dependencies"

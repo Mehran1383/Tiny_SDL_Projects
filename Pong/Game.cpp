@@ -4,6 +4,8 @@ const int thickness = 15;
 const float paddleH = 100.0f;
 const int width = 1024;
 const int height = 768;
+const float paddelVel = 300.0f;
+const float ballAcc = 2.0f;
 
 Game::Game()
 :mWindow(nullptr)
@@ -36,7 +38,7 @@ bool Game::Initialize()
 	
 	mPaddle1Pos.x = 10.0f;
 	mPaddle1Pos.y = height / 2.0f;
-	mPaddle2Pos.x = width - 10.0f;
+	mPaddle2Pos.x = width - 10.0f - thickness;
 	mPaddle2Pos.y = height / 2.0f;
 
 	mBallPos.x = width/2.0f;
@@ -100,11 +102,6 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
-	// Wait until 16ms has elapsed since last frame
-	Uint64 deadline = mTicksCount + 16;
-	while (SDL_GetTicks() < deadline)
-		;
-
 	// Delta time is the difference in ticks from last frame
 	// (converted to seconds)
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
@@ -120,27 +117,27 @@ void Game::UpdateGame()
 	
 	if (mPaddle1Dir != 0)
 	{
-		mPaddle1Pos.y += mPaddle1Dir * 300.0f * deltaTime;
+		mPaddle1Pos.y += mPaddle1Dir * paddelVel * deltaTime;
 		if (mPaddle1Pos.y < (paddleH/2.0f + thickness))
 		{
 			mPaddle1Pos.y = paddleH/2.0f + thickness;
 		}
-		else if (mPaddle1Pos.y > (768.0f - paddleH/2.0f - thickness))
+		else if (mPaddle1Pos.y > (height - paddleH/2.0f - thickness))
 		{
-			mPaddle1Pos.y = 768.0f - paddleH/2.0f - thickness;
+			mPaddle1Pos.y = height - paddleH/2.0f - thickness;
 		}
 	}
 
 	if (mPaddle2Dir != 0)
 	{
-		mPaddle2Pos.y += mPaddle2Dir * 300.0f * deltaTime;
+		mPaddle2Pos.y += mPaddle2Dir * paddelVel * deltaTime;
 		if (mPaddle2Pos.y < (paddleH / 2.0f + thickness))
 		{
 			mPaddle2Pos.y = paddleH / 2.0f + thickness;
 		}
-		else if (mPaddle2Pos.y > (768.0f - paddleH / 2.0f - thickness))
+		else if (mPaddle2Pos.y > (height - paddleH / 2.0f - thickness))
 		{
-			mPaddle2Pos.y = 768.0f - paddleH / 2.0f - thickness;
+			mPaddle2Pos.y = height - paddleH / 2.0f - thickness;
 		}
 	}
 	
@@ -168,10 +165,20 @@ void Game::UpdateGame()
 	{
 		mBallVel.y *= -1;
 	}
-	else if (mBallPos.y >= (768 - thickness) && mBallVel.y > 0.0f)
+	else if (mBallPos.y >= (height - thickness) && mBallVel.y > 0.0f)
 	{
 		mBallVel.y *= -1;
 	}
+
+	if (mBallVel.x > 0)
+		mBallVel.x += ballAcc * deltaTime;
+	else
+		mBallVel.x -= ballAcc * deltaTime;
+
+	if (mBallVel.y > 0)
+		mBallVel.y += ballAcc * deltaTime;
+	else
+		mBallVel.y -= ballAcc * deltaTime;
 }
 
 void Game::GenerateOutput()
@@ -188,7 +195,7 @@ void Game::GenerateOutput()
 	SDL_RenderFillRect(mRenderer, &wall);
 	
 	// Draw bottom wall
-	wall.y = 768 - thickness;
+	wall.y = height - thickness;
 	SDL_RenderFillRect(mRenderer, &wall);
 		
 	// Draw paddle1

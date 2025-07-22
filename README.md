@@ -26,4 +26,5 @@ This project is an implementation of the classic Pong game using C++ and the SDL
 - Add SDL3.lib to Linker -> Input -> "Additional Dependencies"
 - Copy lib/_arch_/SDL3.dll to your project directory.
 
-
+## Screenshots
+<img src="photos/screen1.png" width=300px > <img src="photos/screen2.png" width=300px >

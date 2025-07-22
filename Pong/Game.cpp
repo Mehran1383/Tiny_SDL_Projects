@@ -161,7 +161,7 @@ void Game::UpdateGame()
 		mIsRunning = false;
 	}
 	
-	if (mBallPos.y <= thickness)
+	if (mBallPos.y <= thickness && mBallVel.y < 0.0f)
 	{
 		mBallVel.y *= -1;
 	}

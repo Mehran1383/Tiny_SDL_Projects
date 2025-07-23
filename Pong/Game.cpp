@@ -6,6 +6,7 @@ const int width = 1024;
 const int height = 768;
 const float paddelVel = 300.0f;
 const float ballAcc = 2.0f;
+const float maxSpeed = 500.0f;
 
 Game::Game()
 :mWindow(nullptr)
@@ -160,8 +161,8 @@ void Game::UpdateGame()
 		diff1 = (diff1 > 0.0f) ? diff1 : -diff1;
 		diff2 = (diff2 > 0.0f) ? diff2 : -diff2;
 
-		if ((diff1 <= paddleH / 2.0f && ball.position.x <= 25.0f && ball.position.x >= 20.0f && ball.velocity.x < 0.0f) ||
-			(diff2 <= paddleH / 2.0f && ball.position.x >= width - 25.0f && ball.position.x <= width - 20.0f && ball.velocity.x > 0.0f))
+		if ((diff1 <= paddleH / 2.0f && ball.position.x <= 25.0f && ball.position.x >= 15.0f && ball.velocity.x < 0.0f) ||
+			(diff2 <= paddleH / 2.0f && ball.position.x >= width - 25.0f && ball.position.x <= width - 15.0f && ball.velocity.x > 0.0f))
 		{
 			ball.velocity.x *= -1.0f;
 		}
@@ -179,15 +180,18 @@ void Game::UpdateGame()
 			ball.velocity.y *= -1;
 		}
 
-		if (ball.velocity.x > 0)
-			ball.velocity.x += ballAcc * deltaTime;
-		else
-			ball.velocity.x -= ballAcc * deltaTime;
+		if (fabs(ball.velocity.x) < maxSpeed && fabs(ball.velocity.y) < maxSpeed)
+		{
+			if (ball.velocity.x > 0)
+				ball.velocity.x += ballAcc * deltaTime;
+			else
+				ball.velocity.x -= ballAcc * deltaTime;
 
-		if (ball.velocity.y > 0)
-			ball.velocity.y += ballAcc * deltaTime;
-		else
-			ball.velocity.y -= ballAcc * deltaTime;
+			if (ball.velocity.y > 0)
+				ball.velocity.y += ballAcc * deltaTime;
+			else
+				ball.velocity.y -= ballAcc * deltaTime;
+		}
 	}
 }
 

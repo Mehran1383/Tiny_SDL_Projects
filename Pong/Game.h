@@ -23,7 +23,7 @@ private:
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
 
-	Uint32 mTicksCount;
+	Uint64 mTicksCount;
 	bool mIsRunning;
 	int mPaddle1Dir;
 	int mPaddle2Dir;
